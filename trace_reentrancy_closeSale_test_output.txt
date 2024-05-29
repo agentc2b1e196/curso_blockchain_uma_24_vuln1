@@ -1,0 +1,98 @@
+  [172225] Reentrancy::test_attack()
+    ├─ [0] VM::prank(0x0000000000000000000000000000000000000003)
+    │   └─ ← [Return] 
+    ├─ [23852] FP_Vault::doStake{value: 1000000000000000000}()
+    │   ├─ emit Stake(user: 0x0000000000000000000000000000000000000003, amount: 1000000000000000000 [1e18])
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(0x0000000000000000000000000000000000000003)
+    │   └─ ← [Return] 
+    ├─ [127574] FP_Shop::newSale("Test Item", "This is a test item", 1000000000000000000 [1e18])
+    │   ├─ [5310] FP_Vault::doLock(0x0000000000000000000000000000000000000003, 1000000000000000000 [1e18])
+    │   │   └─ ← [Revert] 
+    │   └─ ← [Revert] 
+    └─ ← [Revert] 
+    
+    
+    
+    
+    
+    
+  [270504] Reentrancy::test_attack()
+    ├─ [0] VM::prank(0x0000000000000000000000000000000000000003)
+    │   └─ ← [Return] 
+    ├─ [23852] FP_Vault::doStake{value: 2000000000000000000}()
+    │   ├─ emit Stake(user: 0x0000000000000000000000000000000000000003, amount: 2000000000000000000 [2e18])
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(0x0000000000000000000000000000000000000003)
+    │   └─ ← [Return] 
+    ├─ [171445] FP_Shop::newSale("Test Item", "This is a test item", 1000000000000000000 [1e18])
+    │   ├─ [26980] FP_Vault::doLock(0x0000000000000000000000000000000000000003, 1000000000000000000 [1e18])
+    │   │   ├─ emit Locked(user: 0x0000000000000000000000000000000000000003, amount: 1000000000000000000 [1e18])
+    │   │   └─ ← [Stop] 
+    │   ├─ emit NewItem(id: 0, title: "Test Item")
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(0x0000000000000000000000000000000000000003)
+    │   └─ ← [Return] 
+    ├─ [341] FP_Shop::offerIndex() [staticcall]
+    │   └─ ← [Return] 1
+    ├─ [52741] FP_Shop::closeSale(0, false, true, true)
+    │   ├─ [0] PRECOMPILES::ripemd{value: 1000000000000000000}(0x)
+    │   │   └─ ← [OutOfFunds] 
+    │   └─ ← [Revert] revert: Sale payment failed
+    └─ ← [Revert] revert: Sale payment failed
+    
+    
+    
+    
+    
+[270504] Reentrancy::test_attack()
+    ├─ [0] VM::prank(0x0000000000000000000000000000000000000003)
+    │   └─ ← [Return] 
+    ├─ [23852] FP_Vault::doStake{value: 2000000000000000000}()
+    │   ├─ emit Stake(user: 0x0000000000000000000000000000000000000003, amount: 2000000000000000000 [2e18])
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(0x0000000000000000000000000000000000000003)
+    │   └─ ← [Return] 
+    ├─ [171445] FP_Shop::newSale("Test Item", "This is a test item", 1000000000000000000 [1e18])
+    │   ├─ [26980] FP_Vault::doLock(0x0000000000000000000000000000000000000003, 1000000000000000000 [1e18])
+    │   │   ├─ emit Locked(user: 0x0000000000000000000000000000000000000003, amount: 1000000000000000000 [1e18])
+    │   │   └─ ← [Stop] 
+    │   ├─ emit NewItem(id: 0, title: "Test Item")
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(0x0000000000000000000000000000000000000003)
+    │   └─ ← [Return] 
+    ├─ [341] FP_Shop::offerIndex() [staticcall]
+    │   └─ ← [Return] 1
+    ├─ [52741] FP_Shop::closeSale(0, false, true, true)
+    │   ├─ [0] PRECOMPILES::ripemd{value: 1000000000000000000}(0x)
+    │   │   └─ ← [OutOfFunds] 
+    │   └─ ← [Revert] revert: Sale payment failed
+    └─ ← [Revert] revert: Sale payment failed
+    
+    
+[372671] Reentrancy::test_attack()
+    ├─ [0] VM::prank(0x0000000000000000000000000000000000000003)
+    │   └─ ← [Return] 
+    ├─ [23852] FP_Vault::doStake{value: 2000000000000000000}()
+    │   ├─ emit Stake(user: 0x0000000000000000000000000000000000000003, amount: 2000000000000000000 [2e18])
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(0x0000000000000000000000000000000000000003)
+    │   └─ ← [Return] 
+    ├─ [171445] FP_Shop::newSale("Test Item", "This is a test item", 10000000000000000000 [1e19])
+    │   ├─ [26980] FP_Vault::doLock(0x0000000000000000000000000000000000000003, 10000000000000000000 [1e19])
+    │   │   ├─ emit Locked(user: 0x0000000000000000000000000000000000000003, amount: 10000000000000000000 [1e19])
+    │   │   └─ ← [Stop] 
+    │   ├─ emit NewItem(id: 0, title: "Test Item")
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(0x0000000000000000000000000000000000000006)
+    │   └─ ← [Return] 
+    ├─ [23852] FP_Vault::doStake{value: 10000000000000000000}()
+    │   ├─ emit Stake(user: 0x0000000000000000000000000000000000000006, amount: 10000000000000000000 [1e19])
+    │   └─ ← [Stop] 
+    ├─ [0] VM::prank(0x0000000000000000000000000000000000000006)
+    │   └─ ← [Return] 
+    ├─ [123574] FP_Shop::newSale("Test Item", "This is a test item", 10000000000000000000 [1e19])
+    │   ├─ [3310] FP_Vault::doLock(0x0000000000000000000000000000000000000006, 10000000000000000000 [1e19])
+    │   │   └─ ← [Revert] 
+    │   └─ ← [Revert] 
+    └─ ← [Revert] 
