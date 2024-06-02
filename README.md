@@ -67,7 +67,8 @@ a la herramienta slither (análisis estático).
 Una posible solución es utilizar el contrato ReentrancyGuard.sol de openzeppelin.
 
 El contrato víctima pasa a heredar de ReentrancyGuard y en la función vulnerable
-se añade el modificador nonReentrant().
+se añade el modificador nonReentrant(). Se proporciona el contrato
+Faillapop_shop_sec.sol con las modificaciones realizadas.
 
 Despúes de añadir estas modificaciones podemos comprobar con Foundry como
 la reentrada ya no ocurre.
