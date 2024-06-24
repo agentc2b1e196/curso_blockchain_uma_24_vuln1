@@ -1,14 +1,42 @@
-## The Faillapop protocol
+# DecentralizedShipCharter: Charter de Embarcaciones en Ethereum
 
-The Faillapop protocol is a vulnerable-by-design protocol to help Web3 security students practice their skills in a fun environment. The protocol is composed of multiple contracts that interact with each other to create a decentralized buying and selling platform. Disputes are resolved through a DAO and malicious sellers are checked by forcing a deposit before selling anything... but there have been a lot of bad decisions during this process :mag:. 
+El concepto de "charter de embarcaciones" se refiere al contrato mediante el cual una persona o entidad (el arrendador o propietario) permite que otra persona (el arrendatario) utilice su embarcación por un período determinado a cambio de un pago. Tradicionalmente, estos contratos involucran acuerdos legales complejos para definir los términos de uso, la duración del alquiler, las responsabilidades financieras y las condiciones de navegación.
 
-You will find common solidity security issues, dubious centralization and logical loopholes. Do not forget to think about others such as flash loans and Out-Of-Gas exceptions! 
+En el contexto de Ethereum y contratos inteligentes, el concepto de charter de embarcaciones puede ser automatizado y descentralizado. Un contrato inteligente de charter de embarcaciones en Ethereum podría permitir que los propietarios de embarcaciones listen sus embarcaciones para alquilar, mientras que los arrendatarios podrían buscar y alquilar embarcaciones utilizando criptomonedas u otros activos digitales. Esto simplificaría el proceso al eliminar intermediarios y reducir costos administrativos y legales.
+DecentralizedShipCharter: Aplicación y Guía para el Usuario
 
-Try to perform a full mock audit! Create your own professional report mimicking those of well-known companies such as Oak Security, Trail of Bits, Hacken, or Halborn. Imagine that you are getting paid for this and trying to do the best job possible! not just finding bugs but also crafting proper paragraphs for your report. 
+DecentralizedShipCharter es un contrato inteligente simple de prueba que simula el proceso de charter de embarcaciones de manera descentralizada en Ethereum. El contrato contiene al menos una vulnerabilidad que el estudiante debe identificar. Más abajo se muestra cual es la vulnerabilidad.
 
-Solutions are not provided along this repo but the documentation has been created following the NatSpec format and the following diagram will help you get a grasp of the whole architecture.
+DecentralizedShipCharter contiene tres funciones:
 
-![Faillapop diagram](./img/Faillapop_diagram_v2.png)
+- Listar una Embarcación para Charter:
+    - Para listar una embarcación, el propietario debe utilizar la función listShip.
+    - Parámetros: itemId (identificador único de la embarcación), price (precio de alquiler en Ether).
+
+- Charter de una embarcación:
+    - Los potenciales arrendatarios pueden alquilar una embarcación utilizando la función charterShip.
+    - Parámetro: itemId (identificador de la embarcación que se quiere alquilar).
+
+- Cerrar un charter:
+    - Después de finalizar el período de alquiler, el propietario puede cerrar el charter y recibir el pago utilizando la función closeCharter.
+    - Parámetros: itemId (identificador de la embarcación), reimburseBuyer (booleano para reembolsar al arrendatario), paySeller (booleano para pagar al propietario), releaseSellerStake (booleano para liberar la garantía del propietario).
+
+El contrato de test DecentralizedShipCharterTest contiene algunos tests básicos del contrato.
+
+- Variables:
+    - charter: variable de instancia del contrato DecentralizedShipCharter que estamos probando.
+    - OWNER: dirección del propietario de la embarcación que estamos listando para charter.
+    - PRICE: Precio en Ether para alquilar la embarcación.
+    - itemId: identificador único de la embarcación que se está listando.
+
+- Funciones:
+    - setUp(): esta función se ejecuta automáticamente antes de cada prueba (test) para inicializar el entorno de prueba.
+    - testCloseCharter_ReimburseCharterer_PayOwner_ReleaseStake(): caso típico de éxito de charter.
+    - testCloseCharter_ReimburseChartererOnly(): caso reembolso solo al arrendador.
+    - testCloseCharter_PayOwnerOnly(): caso paga solo al propietario.
+    - testCloseCharter_ReleaseStakeOnly(): caso libera stake.
+
+# Exploit
 
 ## Reentrancy
 
@@ -25,7 +53,7 @@ de nuevo una llamada a la función de la víctima, iniciando el bucle.
 
 ## Test reentrada
 
-En el caso de Faillapop existe una reentrada en la función closeSale, que
+En el caso de DecentralizedChipCharter existe una reentrada en la función closeSale, que
 además es pública y utiliza fondos del contrato para pagar a los usuarios.
 Se trata por tanto de una vulnerabilidad crítica.
 
@@ -34,16 +62,18 @@ los contratos. Por ejemplo, se pueden simular diferentes usuarios, diferentes
 condiciones iniciales, despliegue de los contratos, etc.
 Los contratos de testeo heredan de Test.
 
-Se proporciona un contrato Reentrancy.t.sol que explota la vulnerabilidad.
+Se proporciona un contrato Reentrancy.sol que explota la vulnerabilidad.
 El código del ataque es el siguiente:
 ```
-function test_attack() external payable createLegitSales() {
-    shop.doBuy{value: 5 ether}(shop.offerIndex()-1);
-    shop.closeSale(shop.offerIndex()-1, false, true, true);
+function testAttack() external payable createLegitSales() {
+    charter.charterShip{value: PRICE}(itemId);
+    charter.closeCharter(itemId, false, true, true);
 }
+
+// Fallback function to continue the attack if funds are received
 receive() external payable {
-    if(address(tx.origin).balance >= 1 ether) {
-        shop.closeSale(shop.offerIndex()-1, false, true, true);
+    if (address(tx.origin).balance >= PRICE) {
+        charter.closeCharter(itemId, false, true, true);
     }
 }
 ```
@@ -55,14 +85,9 @@ La traza de ejecución se muestra en la siguiente imagen.
 Se pueden observar el bucle en las llamadas recursivas entre closeSale
 y receive, hasta que finalmente la tienda se queda sin fondos.
 
-## Análisis estático
+# Soluciones
 
-Una forma de comprobar las vulnerabilidades, y de descubrir más, es recurrir
-a la herramienta slither (análisis estático).
-
-![plot](./img/slither_out.png)
-
-## Posible solución, ReentrancyGuard de openzeppelin
+## ReentrancyGuard de openzeppelin
 
 Una posible solución es utilizar el contrato ReentrancyGuard.sol de openzeppelin.
 
@@ -70,8 +95,14 @@ El contrato víctima pasa a heredar de ReentrancyGuard y en la función vulnerab
 se añade el modificador nonReentrant(). Se proporciona el contrato
 Faillapop_shop_sec.sol con las modificaciones realizadas.
 
-Despúes de añadir estas modificaciones podemos comprobar con Foundry como
+Después de añadir estas modificaciones podemos comprobar con Foundry como
 la reentrada ya no ocurre.
 
 ![plot](./img/trace_guard.png)
+
+## Patrón CEI
+
+No obstante, el ReentrancyGuard solo soluciona algunos tipos de reentrada.
+Sería recomendable además comprobar que la implementación se ajusta al
+patrón CEI (Checks - Effects - Interactions).
 

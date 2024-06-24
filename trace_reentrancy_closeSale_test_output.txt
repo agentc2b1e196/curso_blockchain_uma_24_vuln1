@@ -1,177 +1,73 @@
-juandiez@pop-os:~/Documentos/o/crypto_rd_proj/doc/uma/curso_blockchain/proyecto/repos/vuln1$ forge test --match-test test_attack -vvvv
+juandiez@pop-os:~/Documentos/o/crypto_rd_proj/doc/uma/curso_blockchain/proyecto/repos/curso_blockchain_uma_24_vuln1$ forge test --match-test testAttack -vvvv
 [⠊] Compiling...
-No files changed, compilation skipped
+[⠰] Compiling 1 files with 0.8.25
+[⠔] Solc 0.8.25 finished in 1.23s
+Compiler run successful!
 
-Ran 1 test for test/unit/Reentrancy.t.sol:Reentrancy
-[FAIL. Reason: revert: Sale payment failed] test_attack() (gas: 1094029)
+Ran 1 test for test/unit/Reentrancy.sol:Reentrancy
+[FAIL. Reason: revert: Charter payment failed] testAttack() (gas: 260441)
 Traces:
-  [9047499] Reentrancy::setUp()
-    ├─ [0] VM::deal(Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], 35000000000000000000 [3.5e19])
+  [574172] Reentrancy::setUp()
+    ├─ [515149] → new DecentralizedShipCharter@0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f
+    │   └─ ← [Return] 2573 bytes of code
+    ├─ [0] VM::deal(Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], 5000000000000000000 [5e18])
     │   └─ ← [Return] 
-    ├─ [0] VM::deal(0x000000000000000000000000000000000000001e, 15000000000000000000 [1.5e19])
+    ├─ [0] VM::deal(DecentralizedShipCharter: [0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f], 5000000000000000000 [5e18])
     │   └─ ← [Return] 
-    ├─ [0] VM::deal(0x0000000000000000000000000000000000000028, 15000000000000000000 [1.5e19])
+    ├─ [0] VM::deal(0x000000000000000000000000000000000000001e, 5000000000000000000 [5e18])
     │   └─ ← [Return] 
-    ├─ [0] VM::deal(0x0000000000000000000000000000000000000032, 15000000000000000000 [1.5e19])
-    │   └─ ← [Return] 
-    ├─ [0] VM::deal(0x000000000000000000000000000000000000003c, 15000000000000000000 [1.5e19])
-    │   └─ ← [Return] 
-    ├─ [0] VM::deal(0x0000000000000000000000000000000000000046, 15000000000000000000 [1.5e19])
-    │   └─ ← [Return] 
-    ├─ [0] VM::deal(0x0000000000000000000000000000000000000050, 15000000000000000000 [1.5e19])
-    │   └─ ← [Return] 
-    ├─ [0] VM::deal(0x000000000000000000000000000000000000005a, 15000000000000000000 [1.5e19])
-    │   └─ ← [Return] 
-    ├─ [864893] → new FP_Token@0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f
-    │   ├─ emit RoleGranted(role: 0x0000000000000000000000000000000000000000000000000000000000000000, account: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], sender: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
-    │   ├─ emit RoleGranted(role: 0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a, account: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], sender: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
-    │   ├─ emit Transfer(from: 0x0000000000000000000000000000000000000000, to: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], value: 1000000000000000000000000 [1e24])
-    │   ├─ emit RoleGranted(role: 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6, account: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], sender: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
-    │   └─ ← [Return] 3481 bytes of code
-    ├─ [1176497] → new FP_CoolNFT@0x2e234DAe75C793f67A35089C9d99245E1C58470b
-    │   ├─ emit RoleGranted(role: 0x126c7c8716c8f1c7c73a7370c820c7d73a9b4ed0ad633cfce1092f9ff47c8574, account: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], sender: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
-    │   └─ ← [Return] 5517 bytes of code
-    ├─ [1211324] → new FP_PowersellerNFT@0xF62849F9A0B5Bf2913b396098F7c7019b51A820a
-    │   ├─ emit RoleGranted(role: 0x126c7c8716c8f1c7c73a7370c820c7d73a9b4ed0ad633cfce1092f9ff47c8574, account: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], sender: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
-    │   └─ ← [Return] 5691 bytes of code
-    ├─ [1504955] → new FP_DAO@0x5991A2dF15A8F6A256D3Ec51E99254Cd3fb576A9
-    │   ├─ emit RoleGranted(role: 0x126c7c8716c8f1c7c73a7370c820c7d73a9b4ed0ad633cfce1092f9ff47c8574, account: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], sender: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
-    │   └─ ← [Return] 7156 bytes of code
-    ├─ [1005174] → new FP_Vault@0xc7183455a4C133Ae270771860664b6B7ec320bB1
-    │   ├─ emit RoleGranted(role: 0x3b5d4cc60d3ec3516ee8ae083bd60934f6eb2a6c54b1229985c41bfb092b2603, account: FP_DAO: [0x5991A2dF15A8F6A256D3Ec51E99254Cd3fb576A9], sender: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
-    │   ├─ emit RoleGranted(role: 0x126c7c8716c8f1c7c73a7370c820c7d73a9b4ed0ad633cfce1092f9ff47c8574, account: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], sender: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
-    │   └─ ← [Return] 4762 bytes of code
-    ├─ [2716112] → new FP_Shop@0xa0Cb889707d426A7A386870A03bc70d1b0697598
-    │   ├─ emit RoleGranted(role: 0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775, account: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], sender: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
-    │   ├─ emit RoleGranted(role: 0x3b5d4cc60d3ec3516ee8ae083bd60934f6eb2a6c54b1229985c41bfb092b2603, account: FP_DAO: [0x5991A2dF15A8F6A256D3Ec51E99254Cd3fb576A9], sender: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
-    │   └─ ← [Return] 13317 bytes of code
-    ├─ [67837] FP_Vault::setShop(FP_Shop: [0xa0Cb889707d426A7A386870A03bc70d1b0697598])
-    │   ├─ emit RoleGranted(role: 0x126c7c8716c8f1c7c73a7370c820c7d73a9b4ed0ad633cfce1092f9ff47c8574, account: FP_Shop: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], sender: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
-    │   └─ ← [Stop] 
-    ├─ [67881] FP_DAO::setShop(FP_Shop: [0xa0Cb889707d426A7A386870A03bc70d1b0697598])
-    │   ├─ emit RoleGranted(role: 0x126c7c8716c8f1c7c73a7370c820c7d73a9b4ed0ad633cfce1092f9ff47c8574, account: FP_Shop: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], sender: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
-    │   └─ ← [Stop] 
-    ├─ [45714] FP_PowersellerNFT::setShop(FP_Shop: [0xa0Cb889707d426A7A386870A03bc70d1b0697598])
-    │   ├─ emit RoleGranted(role: 0x126c7c8716c8f1c7c73a7370c820c7d73a9b4ed0ad633cfce1092f9ff47c8574, account: FP_Shop: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], sender: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
-    │   └─ ← [Stop] 
-    ├─ [45691] FP_CoolNFT::setDAO(FP_DAO: [0x5991A2dF15A8F6A256D3Ec51E99254Cd3fb576A9])
-    │   ├─ emit RoleGranted(role: 0x126c7c8716c8f1c7c73a7370c820c7d73a9b4ed0ad633cfce1092f9ff47c8574, account: FP_DAO: [0x5991A2dF15A8F6A256D3Ec51E99254Cd3fb576A9], sender: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496])
-    │   └─ ← [Stop] 
-    ├─ [0] VM::deal(FP_Shop: [0xa0Cb889707d426A7A386870A03bc70d1b0697598], 20000000000000000000 [2e19])
+    ├─ [0] VM::deal(0x0000000000000000000000000000000000000028, 5000000000000000000 [5e18])
     │   └─ ← [Return] 
     └─ ← [Stop] 
 
-  [1094029] Reentrancy::test_attack()
-    ├─ [0] VM::prank(0x000000000000000000000000000000000000001e)
-    │   └─ ← [Return] 
-    ├─ [23852] FP_Vault::doStake{value: 11000000000000000000}()
-    │   ├─ emit Stake(user: 0x000000000000000000000000000000000000001e, amount: 11000000000000000000 [1.1e19])
+  [240541] Reentrancy::testAttack()
+    ├─ [94660] DecentralizedShipCharter::listShip{value: 1000000000000000000}(1, 1000000000000000000 [1e18])
+    │   ├─ emit ShipListed(shipId: 1, owner: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], price: 1000000000000000000 [1e18])
+    │   ├─ emit StakeLocked(owner: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], amount: 1000000000000000000 [1e18])
     │   └─ ← [Stop] 
-    ├─ [0] VM::prank(0x000000000000000000000000000000000000001e)
-    │   └─ ← [Return] 
-    ├─ [171445] FP_Shop::newSale("Test Item", "This is a test item", 5000000000000000000 [5e18])
-    │   ├─ [26980] FP_Vault::doLock(0x000000000000000000000000000000000000001e, 5000000000000000000 [5e18])
-    │   │   ├─ emit Locked(user: 0x000000000000000000000000000000000000001e, amount: 5000000000000000000 [5e18])
-    │   │   └─ ← [Stop] 
-    │   ├─ emit NewItem(id: 0, title: "Test Item")
+    ├─ [22842] DecentralizedShipCharter::charterShip{value: 1000000000000000000}(1)
+    │   ├─ emit ShipChartered(shipId: 1, charterer: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], price: 1000000000000000000 [1e18])
     │   └─ ← [Stop] 
-    ├─ [0] VM::prank(0x000000000000000000000000000000000000003c)
-    │   └─ ← [Return] 
-    ├─ [23852] FP_Vault::doStake{value: 11000000000000000000}()
-    │   ├─ emit Stake(user: 0x000000000000000000000000000000000000003c, amount: 11000000000000000000 [1.1e19])
-    │   └─ ← [Stop] 
-    ├─ [0] VM::prank(0x000000000000000000000000000000000000003c)
-    │   └─ ← [Return] 
-    ├─ [147545] FP_Shop::newSale("Test Item", "This is a test item", 5000000000000000000 [5e18])
-    │   ├─ [24980] FP_Vault::doLock(0x000000000000000000000000000000000000003c, 5000000000000000000 [5e18])
-    │   │   ├─ emit Locked(user: 0x000000000000000000000000000000000000003c, amount: 5000000000000000000 [5e18])
-    │   │   └─ ← [Stop] 
-    │   ├─ emit NewItem(id: 1, title: "Test Item")
-    │   └─ ← [Stop] 
-    ├─ [0] VM::prank(0x0000000000000000000000000000000000000046)
-    │   └─ ← [Return] 
-    ├─ [23852] FP_Vault::doStake{value: 11000000000000000000}()
-    │   ├─ emit Stake(user: 0x0000000000000000000000000000000000000046, amount: 11000000000000000000 [1.1e19])
-    │   └─ ← [Stop] 
-    ├─ [0] VM::prank(0x0000000000000000000000000000000000000046)
-    │   └─ ← [Return] 
-    ├─ [147545] FP_Shop::newSale("Test Item", "This is a test item", 5000000000000000000 [5e18])
-    │   ├─ [24980] FP_Vault::doLock(0x0000000000000000000000000000000000000046, 5000000000000000000 [5e18])
-    │   │   ├─ emit Locked(user: 0x0000000000000000000000000000000000000046, amount: 5000000000000000000 [5e18])
-    │   │   └─ ← [Stop] 
-    │   ├─ emit NewItem(id: 2, title: "Test Item")
-    │   └─ ← [Stop] 
-    ├─ [0] VM::prank(0x0000000000000000000000000000000000000050)
-    │   └─ ← [Return] 
-    ├─ [23852] FP_Vault::doStake{value: 11000000000000000000}()
-    │   ├─ emit Stake(user: 0x0000000000000000000000000000000000000050, amount: 11000000000000000000 [1.1e19])
-    │   └─ ← [Stop] 
-    ├─ [0] VM::prank(0x0000000000000000000000000000000000000050)
-    │   └─ ← [Return] 
-    ├─ [147545] FP_Shop::newSale("Test Item", "This is a test item", 5000000000000000000 [5e18])
-    │   ├─ [24980] FP_Vault::doLock(0x0000000000000000000000000000000000000050, 5000000000000000000 [5e18])
-    │   │   ├─ emit Locked(user: 0x0000000000000000000000000000000000000050, amount: 5000000000000000000 [5e18])
-    │   │   └─ ← [Stop] 
-    │   ├─ emit NewItem(id: 3, title: "Test Item")
-    │   └─ ← [Stop] 
-    ├─ [23852] FP_Vault::doStake{value: 11000000000000000000}()
-    │   ├─ emit Stake(user: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], amount: 11000000000000000000 [1.1e19])
-    │   └─ ← [Stop] 
-    ├─ [147545] FP_Shop::newSale("Test Item", "This is a test item", 5000000000000000000 [5e18])
-    │   ├─ [24980] FP_Vault::doLock(Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], 5000000000000000000 [5e18])
-    │   │   ├─ emit Locked(user: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], amount: 5000000000000000000 [5e18])
-    │   │   └─ ← [Stop] 
-    │   ├─ emit NewItem(id: 4, title: "Test Item")
-    │   └─ ← [Stop] 
-    ├─ [341] FP_Shop::offerIndex() [staticcall]
-    │   └─ ← [Return] 5
-    ├─ [43297] FP_Shop::doBuy{value: 5000000000000000000}(4)
-    │   ├─ emit Buy(user: Reentrancy: [0x7FA9385bE102ac3EAc297483Dd6233D62b3e1496], item: 4)
-    │   └─ ← [Stop] 
-    ├─ [341] FP_Shop::offerIndex() [staticcall]
-    │   └─ ← [Return] 5
-    ├─ [104101] FP_Shop::closeSale(4, false, true, true)
-    │   ├─ [51266] Reentrancy::receive{value: 5000000000000000000}()
-    │   │   ├─ [341] FP_Shop::offerIndex() [staticcall]
-    │   │   │   └─ ← [Return] 5
-    │   │   ├─ [49734] FP_Shop::closeSale(4, false, true, true)
-    │   │   │   ├─ [40994] Reentrancy::receive{value: 5000000000000000000}()
-    │   │   │   │   ├─ [341] FP_Shop::offerIndex() [staticcall]
-    │   │   │   │   │   └─ ← [Return] 5
-    │   │   │   │   ├─ [39462] FP_Shop::closeSale(4, false, true, true)
-    │   │   │   │   │   ├─ [30722] Reentrancy::receive{value: 5000000000000000000}()
-    │   │   │   │   │   │   ├─ [341] FP_Shop::offerIndex() [staticcall]
-    │   │   │   │   │   │   │   └─ ← [Return] 5
-    │   │   │   │   │   │   ├─ [29190] FP_Shop::closeSale(4, false, true, true)
-    │   │   │   │   │   │   │   ├─ [20450] Reentrancy::receive{value: 5000000000000000000}()
-    │   │   │   │   │   │   │   │   ├─ [341] FP_Shop::offerIndex() [staticcall]
-    │   │   │   │   │   │   │   │   │   └─ ← [Return] 5
-    │   │   │   │   │   │   │   │   ├─ [18918] FP_Shop::closeSale(4, false, true, true)
-    │   │   │   │   │   │   │   │   │   ├─ [10178] Reentrancy::receive{value: 5000000000000000000}()
-    │   │   │   │   │   │   │   │   │   │   ├─ [341] FP_Shop::offerIndex() [staticcall]
-    │   │   │   │   │   │   │   │   │   │   │   └─ ← [Return] 5
-    │   │   │   │   │   │   │   │   │   │   ├─ [8646] FP_Shop::closeSale(4, false, true, true)
-    │   │   │   │   │   │   │   │   │   │   │   ├─ [0] Reentrancy::receive{value: 5000000000000000000}()
-    │   │   │   │   │   │   │   │   │   │   │   │   └─ ← [OutOfFunds] EvmError: OutOfFunds
-    │   │   │   │   │   │   │   │   │   │   │   └─ ← [Revert] revert: Sale payment failed
-    │   │   │   │   │   │   │   │   │   │   └─ ← [Revert] revert: Sale payment failed
-    │   │   │   │   │   │   │   │   │   └─ ← [Revert] revert: Sale payment failed
-    │   │   │   │   │   │   │   │   └─ ← [Revert] revert: Sale payment failed
-    │   │   │   │   │   │   │   └─ ← [Revert] revert: Sale payment failed
-    │   │   │   │   │   │   └─ ← [Revert] revert: Sale payment failed
-    │   │   │   │   │   └─ ← [Revert] revert: Sale payment failed
-    │   │   │   │   └─ ← [Revert] revert: Sale payment failed
-    │   │   │   └─ ← [Revert] revert: Sale payment failed
-    │   │   └─ ← [Revert] revert: Sale payment failed
-    │   └─ ← [Revert] revert: Sale payment failed
-    └─ ← [Revert] revert: Sale payment failed
+    ├─ [120949] DecentralizedShipCharter::closeCharter(1, false, true, true)
+    │   ├─ [67967] Reentrancy::receive{value: 1000000000000000000}()
+    │   │   ├─ [67131] DecentralizedShipCharter::closeCharter(1, false, true, true)
+    │   │   │   ├─ [58244] Reentrancy::receive{value: 1000000000000000000}()
+    │   │   │   │   ├─ [57408] DecentralizedShipCharter::closeCharter(1, false, true, true)
+    │   │   │   │   │   ├─ [48521] Reentrancy::receive{value: 1000000000000000000}()
+    │   │   │   │   │   │   ├─ [47685] DecentralizedShipCharter::closeCharter(1, false, true, true)
+    │   │   │   │   │   │   │   ├─ [38798] Reentrancy::receive{value: 1000000000000000000}()
+    │   │   │   │   │   │   │   │   ├─ [37962] DecentralizedShipCharter::closeCharter(1, false, true, true)
+    │   │   │   │   │   │   │   │   │   ├─ [29075] Reentrancy::receive{value: 1000000000000000000}()
+    │   │   │   │   │   │   │   │   │   │   ├─ [28239] DecentralizedShipCharter::closeCharter(1, false, true, true)
+    │   │   │   │   │   │   │   │   │   │   │   ├─ [19352] Reentrancy::receive{value: 1000000000000000000}()
+    │   │   │   │   │   │   │   │   │   │   │   │   ├─ [18516] DecentralizedShipCharter::closeCharter(1, false, true, true)
+    │   │   │   │   │   │   │   │   │   │   │   │   │   ├─ [9629] Reentrancy::receive{value: 1000000000000000000}()
+    │   │   │   │   │   │   │   │   │   │   │   │   │   │   ├─ [8793] DecentralizedShipCharter::closeCharter(1, false, true, true)
+    │   │   │   │   │   │   │   │   │   │   │   │   │   │   │   ├─ [0] Reentrancy::receive{value: 1000000000000000000}()
+    │   │   │   │   │   │   │   │   │   │   │   │   │   │   │   │   └─ ← [OutOfFunds] EvmError: OutOfFunds
+    │   │   │   │   │   │   │   │   │   │   │   │   │   │   │   └─ ← [Revert] revert: Charter payment failed
+    │   │   │   │   │   │   │   │   │   │   │   │   │   │   └─ ← [Revert] revert: Charter payment failed
+    │   │   │   │   │   │   │   │   │   │   │   │   │   └─ ← [Revert] revert: Charter payment failed
+    │   │   │   │   │   │   │   │   │   │   │   │   └─ ← [Revert] revert: Charter payment failed
+    │   │   │   │   │   │   │   │   │   │   │   └─ ← [Revert] revert: Charter payment failed
+    │   │   │   │   │   │   │   │   │   │   └─ ← [Revert] revert: Charter payment failed
+    │   │   │   │   │   │   │   │   │   └─ ← [Revert] revert: Charter payment failed
+    │   │   │   │   │   │   │   │   └─ ← [Revert] revert: Charter payment failed
+    │   │   │   │   │   │   │   └─ ← [Revert] revert: Charter payment failed
+    │   │   │   │   │   │   └─ ← [Revert] revert: Charter payment failed
+    │   │   │   │   │   └─ ← [Revert] revert: Charter payment failed
+    │   │   │   │   └─ ← [Revert] revert: Charter payment failed
+    │   │   │   └─ ← [Revert] revert: Charter payment failed
+    │   │   └─ ← [Revert] revert: Charter payment failed
+    │   └─ ← [Revert] revert: Charter payment failed
+    └─ ← [Revert] revert: Charter payment failed
 
-Suite result: FAILED. 0 passed; 1 failed; 0 skipped; finished in 2.09ms (601.71µs CPU time)
+Suite result: FAILED. 0 passed; 1 failed; 0 skipped; finished in 1.33ms (507.35µs CPU time)
 
-Ran 1 test suite in 656.10ms (2.09ms CPU time): 0 tests passed, 1 failed, 0 skipped (1 total tests)
+Ran 1 test suite in 1.18s (1.33ms CPU time): 0 tests passed, 1 failed, 0 skipped (1 total tests)
 
 Failing tests:
-Encountered 1 failing test in test/unit/Reentrancy.t.sol:Reentrancy
-[FAIL. Reason: revert: Sale payment failed] test_attack() (gas: 1094029)
+Encountered 1 failing test in test/unit/Reentrancy.sol:Reentrancy
+[FAIL. Reason: revert: Charter payment failed] testAttack() (gas: 260441)
 
 Encountered a total of 1 failing tests, 0 tests succeeded
